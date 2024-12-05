@@ -1,0 +1,48 @@
+import random
+import hangeman_word
+import hangeman_art
+lives = 6
+
+chosen_word = random.choice(hangeman_word.word_list )
+print(chosen_word )
+placeholder = ""
+word_length = len(chosen_word)
+for position in range (word_length):
+    placeholder += "_"
+print(placeholder)
+
+game_over = False
+correct_letter = []
+
+while not game_over:
+
+    guess  = input("Guess a letter: ").lower()
+    if guess in correct_letter:
+        print(f"You've already guessed {guess}")
+    display = ""
+
+
+
+    for letter in chosen_word:
+        if letter == guess:
+            display += letter
+            correct_letter.append(guess)
+        elif letter in correct_letter:
+            display += letter
+        else:
+            display += "_"
+
+
+    print("Word of guess: "+ display)
+    if guess not  in chosen_word:
+        lives -= 1
+        print(f"you guessed {guess}, that's not in the word. You lose a life.")
+        if lives == 0:
+            game_over = True
+            print(f"It was {chosen_word}! You lose.")
+
+    if "_" not in display:
+            game_over = True
+            print ("you Win.")
+
+    print(hangeman_art.stages[lives])
